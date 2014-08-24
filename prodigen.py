@@ -9,7 +9,9 @@ import logging
 import argparse
 from datetime import datetime
 
-LOG = logging.getLogger(__name__)
+logging.basicConfig(level=logging.DEBUG)
+LOG = logging.getLogger('prodigen')
+
 DATE = datetime.now().strftime('%Y-%m-%d')
 DIRTREE = [ 'data', \
 			'scripts/functions', \
@@ -43,22 +45,18 @@ def parse_args():
 
 	if args.debug:
 		LOG.setLevel(logging.DEBUG)
+	else:
+		LOG.setLevel(logging.WARNING)
 
 	return args
 
 def main():
 
 	args = parse_args()
-
-	# TODO: Fix logging
-	#LOG.debug('Arguments: {args}, Date: {date}, Dirtree: {dirtree}'.format(args=args, date=DATE, dirtree=DIRTREE))
+	LOG.debug('Arguments: {args},\nDate: {date},\nDirtree: {dirtree}'.format(args=args, date=DATE, dirtree=DIRTREE))
 
 	return 0
 
-# TODO: Temporary
-sys.exit(main())
-
-'''
-def __main__():
+# run as a standalone script
+if __name__ == '__main__':
 	sys.exit(main())
-'''
