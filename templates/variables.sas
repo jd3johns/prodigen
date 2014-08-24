@@ -55,7 +55,8 @@ run;
     
     */
 %let ds = working;
-%csvgz_import(dataset=./data/$DATA, outds=&ds);
+%csvgz_import(dataset=$DATASET,
+    outds=&ds, dir=../data);
 %contents(dataset=&ds);
 run;
 
@@ -79,11 +80,12 @@ run;
     dataset and change to read-only. Requires Unix OS.
     
     */
+x "if [ ! -d ../data ] ; then mkdir ../data; fi";
 proc export data=&ds
-    outfile="../dataset/${PROJECT}_data.csv"
+    outfile="../data/${PROJECT}_data.csv"
     dbms=csv
     replace;
 run;
 
-x 'gzip -f -9 ../dataset/${PROJECT}_data.csv;
-chmod 444 ../dataset/${PROJECT}_data.csv.gz';
+x 'gzip -f -9 ../data/${PROJECT}_data.csv;
+chmod 444 ../data/${PROJECT}_data.csv.gz';
